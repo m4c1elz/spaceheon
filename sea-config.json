@@ -1,0 +1,5 @@
+{
+  "main": "./dist/bundle.js",
+  "output": "spaceheon.exe",
+  "mainFormat": "module"
+}
