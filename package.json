@@ -2,10 +2,9 @@
   "name": "spaceheon",
   "version": "1.0.0",
   "description": "Migrate your spacehey blogs to napoleon.",
-  "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "rollup -c && node --build-sea sea-config.json"
+    "build": "tsup src/index.ts && node --build-sea sea-config.json"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +25,9 @@
     "@rollup/plugin-commonjs": "^29.0.2",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
-    "rollup": "^4.59.0"
+    "rollup": "^4.59.0",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }
