@@ -3,7 +3,7 @@
 
 import 'dotenv/config'
 import { Command } from 'commander'
-import { migrate } from './commands/migrate.js'
+import { migrate } from './commands/migrate'
 import pkg from '../package.json'
 
 const program = new Command()

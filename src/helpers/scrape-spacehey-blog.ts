@@ -1,4 +1,5 @@
 import { load } from 'cheerio'
+import { Blog } from '../types'
 
 const initialBlogText = `
 <b>
@@ -13,7 +14,10 @@ const initialBlogText = `
 </b>
 <br>`
 
-export async function scrapeSpaceheyBlog(blogId: string, userSession: string) {
+export async function scrapeSpaceheyBlog(
+    blogId: string,
+    userSession: string,
+): Promise<Blog> {
     const response = await fetch(
         'https://blog.spacehey.com/entry?id=' + blogId,
         {

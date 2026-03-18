@@ -1,9 +1,9 @@
 import enquirer from 'enquirer'
-import { migrateSingleBlog } from '../actions/migrate-single-blog.js'
+import { migrateSingleBlog } from '../actions/migrate-single-blog'
 
 export async function migrate() {
-    let spaceheyId = process.env.SPACEHEY_SESSID
-    let napoleonId = process.env.NAPOLEON_SESSID
+    let spaceheyId = process.env.SPACEHEY_SESSID || ''
+    let napoleonId = process.env.NAPOLEON_SESSID || ''
 
     if (process.env.NODE_ENV !== 'development') {
         const answers = await enquirer.prompt<{

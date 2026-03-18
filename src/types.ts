@@ -1,6 +1,6 @@
 export type Blog = {
     title: string
     blogHtml: string
-    originalTimestamp: string
+    originalTimestamp: number
     kudosCount: string
 }
