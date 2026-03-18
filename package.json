@@ -4,7 +4,7 @@
   "description": "Migrate your spacehey blogs to napoleon.",
   "type": "module",
   "scripts": {
-    "build": "tsup src/index.ts && node --build-sea sea-config.json"
+    "build": "rollup -c && node --build-sea sea-config.json"
   },
   "keywords": [],
   "author": "",
@@ -19,14 +19,16 @@
     "nanospinner": "^1.2.2"
   },
   "bin": {
-    "spaceheon": "./src/index.js"
+    "spaceheon": "./bin/index.js"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^29.0.2",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-typescript": "^12.3.0",
     "@types/node": "^25.5.0",
     "rollup": "^4.59.0",
+    "tslib": "^2.8.1",
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
