@@ -1,6 +1,7 @@
 import enquirer from 'enquirer'
 import { migrateSingleBlog } from '../actions/migrate-single-blog'
 import { getUserKeys } from '../helpers/keys'
+import { spinner } from '../constants'
 
 export async function migrate() {
     try {
@@ -14,7 +15,7 @@ export async function migrate() {
 
         migrateSingleBlog(blogId, spaceheyKey, napoleonKey)
     } catch (error) {
-        console.log(
+        spinner.error(
             'Keys not provided. Please use "spaceheon setup" and try again.',
         )
     }

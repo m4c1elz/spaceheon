@@ -1,5 +1,6 @@
 import enquirer from 'enquirer'
 import { saveUserKeys } from '../helpers/keys'
+import { spinner } from '../constants'
 
 export async function setup() {
     const { napoleonSessionId, spaceheySessionId } = await enquirer.prompt<{
@@ -18,5 +19,11 @@ export async function setup() {
         },
     ])
 
+    spinner.start('Saving...')
+
     await saveUserKeys(spaceheySessionId, napoleonSessionId)
+
+    spinner.success(
+        'Keys saved! You can start migrating with "spaceheon migrate" now.',
+    )
 }
