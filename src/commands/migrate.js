@@ -26,7 +26,7 @@ export async function migrate(options, command) {
     const { blogId } = await enquirer.prompt({
         type: 'input',
         name: 'blogId',
-        message: 'Insert the spacehey blog ID to post to SpaceHey:',
+        message: 'Insert the spacehey blog ID to post to napoleon:',
     })
 
     migrateSingleBlog(blogId, spaceheyId, napoleonId)
