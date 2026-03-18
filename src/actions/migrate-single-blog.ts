@@ -5,9 +5,9 @@ import { postBlogToNapoleon } from '../helpers/post-blog-to-napoleon.js'
 import { spinner } from '../spinner.js'
 
 export async function migrateSingleBlog(
-    blogId,
-    spaceheySession,
-    napoleonSession,
+    blogId: string,
+    spaceheySession: string,
+    napoleonSession: string,
 ) {
     spinner.start('Fetching Spacehey Blog...')
 

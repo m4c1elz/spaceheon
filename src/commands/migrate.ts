@@ -1,12 +1,15 @@
 import enquirer from 'enquirer'
 import { migrateSingleBlog } from '../actions/migrate-single-blog.js'
 
-export async function migrate(options, command) {
+export async function migrate() {
     let spaceheyId = process.env.SPACEHEY_SESSID
     let napoleonId = process.env.NAPOLEON_SESSID
 
     if (process.env.NODE_ENV !== 'development') {
-        const answers = await enquirer.prompt([
+        const answers = await enquirer.prompt<{
+            spaceheyId: string
+            napoleonId: string
+        }>([
             {
                 type: 'input',
                 name: 'spaceheyId',
@@ -23,7 +26,7 @@ export async function migrate(options, command) {
         napoleonId = answers.napoleonId
     }
 
-    const { blogId } = await enquirer.prompt({
+    const { blogId } = await enquirer.prompt<{ blogId: string }>({
         type: 'input',
         name: 'blogId',
         message: 'Insert the spacehey blog ID to post to napoleon:',

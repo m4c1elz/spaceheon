@@ -13,6 +13,6 @@ program.name(pkg.name).version(pkg.version).description(pkg.description)
 program
     .command('migrate')
     .description('Migrates your blog from spacehey to napoleon.')
-    .action(migrate)
+    .action(() => migrate())
 
 program.parse()
