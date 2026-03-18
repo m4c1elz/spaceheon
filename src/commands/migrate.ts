@@ -1,36 +1,21 @@
 import enquirer from 'enquirer'
 import { migrateSingleBlog } from '../actions/migrate-single-blog'
+import { getUserKeys } from '../helpers/keys'
 
 export async function migrate() {
-    let spaceheyId = process.env.SPACEHEY_SESSID || ''
-    let napoleonId = process.env.NAPOLEON_SESSID || ''
+    try {
+        const { napoleonKey, spaceheyKey } = await getUserKeys()
 
-    if (process.env.NODE_ENV !== 'development') {
-        const answers = await enquirer.prompt<{
-            spaceheyId: string
-            napoleonId: string
-        }>([
-            {
-                type: 'input',
-                name: 'spaceheyId',
-                message: 'Insert your spacehey session ID:',
-            },
-            {
-                type: 'input',
-                name: 'napoleonId',
-                message: 'Insert your napoleon session ID:',
-            },
-        ])
+        const { blogId } = await enquirer.prompt<{ blogId: string }>({
+            type: 'input',
+            name: 'blogId',
+            message: 'Insert the spacehey blog ID to post to napoleon:',
+        })
 
-        spaceheyId = answers.spaceheyId
-        napoleonId = answers.napoleonId
+        migrateSingleBlog(blogId, spaceheyKey, napoleonKey)
+    } catch (error) {
+        console.log(
+            'Keys not provided. Please use "spaceheon setup" and try again.',
+        )
     }
-
-    const { blogId } = await enquirer.prompt<{ blogId: string }>({
-        type: 'input',
-        name: 'blogId',
-        message: 'Insert the spacehey blog ID to post to napoleon:',
-    })
-
-    migrateSingleBlog(blogId, spaceheyId, napoleonId)
 }
