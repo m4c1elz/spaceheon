@@ -2,7 +2,7 @@
 
 import { scrapeSpaceheyBlog } from '../helpers/scrape-spacehey-blog'
 import { postBlogToNapoleon } from '../helpers/post-blog-to-napoleon'
-import { spinner } from '../spinner'
+import { spinner } from '../constants'
 
 export async function migrateSingleBlog(
     blogId: string,
