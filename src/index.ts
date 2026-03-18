@@ -3,8 +3,8 @@
 
 import 'dotenv/config'
 import { Command } from 'commander'
-import { migrate } from './commands/migrate.js'
-import pkg from '../package.json' with { type: 'json' }
+import { migrate } from './commands/migrate'
+import pkg from '../package.json'
 
 const program = new Command()
 
@@ -13,6 +13,6 @@ program.name(pkg.name).version(pkg.version).description(pkg.description)
 program
     .command('migrate')
     .description('Migrates your blog from spacehey to napoleon.')
-    .action(migrate)
+    .action(() => migrate())
 
 program.parse()

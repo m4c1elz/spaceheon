@@ -1,8 +1,8 @@
 import { load } from 'cheerio'
 
-export async function getSpaceheyBlogIds(userId, userSession) {
+export async function getSpaceheyBlogIds(userId: number, userSession: string) {
     const response = await fetch(
-        'https://blog.spacehey.com/user?id='.concat(userId),
+        `https://blog.spacehey.com/user?id=${userId}`,
         {
             headers: {
                 Cookie: 'SPACEHEY_SESSID='.concat(userSession),
@@ -19,7 +19,7 @@ export async function getSpaceheyBlogIds(userId, userSession) {
         .map(entry => {
             return entry.attributes
                 .find(attr => attr.name == 'href')
-                .value.split('=')[1]
+                ?.value.split('=')[1]
         })
 
     return entries

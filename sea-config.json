@@ -1,5 +1,5 @@
 {
-  "main": "./dist/bundle.js",
-  "output": "spaceheon.exe",
-  "mainFormat": "module"
+  "main": "./bin/index.js",
+  "output": "./bin/spaceheon.exe",
+  "disableExperimentalSEAWarning": true
 }

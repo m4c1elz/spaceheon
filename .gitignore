@@ -1,4 +1,4 @@
 node_modules
-dist
+bin
 spaceheon.exe
 .env

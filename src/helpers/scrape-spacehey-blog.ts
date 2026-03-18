@@ -1,4 +1,5 @@
 import { load } from 'cheerio'
+import { Blog } from '../types'
 
 const initialBlogText = `
 <b>
@@ -13,7 +14,10 @@ const initialBlogText = `
 </b>
 <br>`
 
-export async function scrapeSpaceheyBlog(blogId, userSession) {
+export async function scrapeSpaceheyBlog(
+    blogId: string,
+    userSession: string,
+): Promise<Blog> {
     const response = await fetch(
         'https://blog.spacehey.com/entry?id=' + blogId,
         {
@@ -34,8 +38,8 @@ export async function scrapeSpaceheyBlog(blogId, userSession) {
     $('.content style').remove()
 
     const title = $('h1.title').text()
-    const blogHtml = '' + $('.content').html().trim()
-    const originalTimestamp = $('time.ago').html()
+    const blogHtml = '' + $('.content').html()?.trim()
+    const originalTimestamp = Number($('time.ago').html())
     const kudosCount = $('#kudos b').text()
 
     const fullHtml = initialBlogText
