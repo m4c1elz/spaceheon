@@ -8,8 +8,10 @@ export async function saveUserKeys(spaceheyKey: string, napoleonKey: string) {
 }
 
 export async function getUserKeys() {
-    const spaceheyKey = await keytar.getPassword('spaceheon', 'spacehey_sessid')
-    const napoleonKey = await keytar.getPassword('spaceheon', 'napoleon_sessid')
+    const [spaceheyKey, napoleonKey] = await Promise.all([
+        keytar.getPassword('spaceheon', 'spacehey_sessid'),
+        keytar.getPassword('spaceheon', 'napoleon_sessid'),
+    ])
 
     if (!spaceheyKey || !napoleonKey) {
         throw new Error('Keys not found')
