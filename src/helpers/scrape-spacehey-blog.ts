@@ -20,7 +20,13 @@ const initialBlogText = `
 export async function scrapeSpaceheyBlog(
     blogId: string,
 ): Promise<Result<Blog, { message: string }>> {
-    const { spaceheyKey } = await getUserKeys()
+    const keysResult = await getUserKeys()
+
+    if (keysResult.isErr()) {
+        return err(keysResult.error)
+    }
+
+    const { spaceheyKey } = keysResult.value
 
     const response = await fetch(
         `https://blog.spacehey.com/entry?id=${blogId}`,

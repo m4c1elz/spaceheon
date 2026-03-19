@@ -4,3 +4,12 @@ export type Blog = {
     originalTimestamp: number
     kudosCount: string
 }
+
+export type Keys = {
+    spaceheyKey: string
+    napoleonKey: string
+}
+
+export type AppError = {
+    message: string
+}

@@ -13,7 +13,13 @@ export async function postBlogToNapoleon(
 
     const data = new URLSearchParams(form).toString().concat('&submit=')
 
-    const { napoleonKey } = await getUserKeys()
+    const keysResult = await getUserKeys()
+
+    if (keysResult.isErr()) {
+        return err(keysResult.error)
+    }
+
+    const { napoleonKey } = keysResult.value
 
     const response = await fetch('https://napoleonite.space/blog/newpost.php', {
         method: 'POST',
