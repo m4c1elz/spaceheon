@@ -8,7 +8,7 @@ export async function postBlogToNapoleon(
     const form = {
         subject: blog.title,
         content: blog.blogHtml,
-        category: '1',
+        category: '1', // TODO: add category mapping from spacehey to napoleon
     }
 
     const data = new URLSearchParams(form).toString().concat('&submit=')

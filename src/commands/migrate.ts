@@ -8,9 +8,8 @@ export async function migrate() {
     const result = await getUserKeys()
 
     if (result.isErr()) {
-        spinner.error(
-            'Keys not provided. Please run "spaceheon setup" and try again.',
-        )
+        spinner.error(result.error.message)
+        return
     }
 
     const { blogId } = await enquirer.prompt<{ blogId: string }>({
@@ -19,5 +18,11 @@ export async function migrate() {
         message: 'Insert the spacehey blog ID to post to napoleon:',
     })
 
-    migrateSingleBlog(blogId)
+    const migrateResult = await migrateSingleBlog(blogId)
+
+    if (migrateResult.isErr()) {
+        spinner.error(migrateResult.error.message)
+    } else {
+        spinner.success('Blog posted! Check Napoleon.')
+    }
 }
