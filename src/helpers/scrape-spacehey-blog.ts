@@ -1,7 +1,7 @@
 import { load } from 'cheerio'
 import { getUserKeys } from './keys'
 import { err, ok, Result } from 'neverthrow'
-import { Blog } from '../types'
+import { AppError, Blog } from '../types'
 
 const initialBlogText = `
 <b style="text-align: center">
@@ -19,7 +19,7 @@ const initialBlogText = `
 
 export async function scrapeSpaceheyBlog(
     blogId: string,
-): Promise<Result<Blog, { message: string }>> {
+): Promise<Result<Blog, AppError>> {
     const keysResult = await getUserKeys()
 
     if (keysResult.isErr()) {

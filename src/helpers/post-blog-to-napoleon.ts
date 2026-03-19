@@ -1,10 +1,10 @@
-import { Blog } from '../types'
+import { AppError, Blog } from '../types'
 import { getUserKeys } from './keys'
 import { err, ok, Result } from 'neverthrow'
 
 export async function postBlogToNapoleon(
     blog: Blog,
-): Promise<Result<void, { message: string }>> {
+): Promise<Result<void, AppError>> {
     const form = {
         subject: blog.title,
         content: blog.blogHtml,
