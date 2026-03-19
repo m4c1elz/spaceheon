@@ -26,6 +26,9 @@ importers:
       nanospinner:
         specifier: ^1.2.2
         version: 1.2.2
+      neverthrow:
+        specifier: ^8.2.0
+        version: 8.2.0
     devDependencies:
       '@rollup/plugin-commonjs':
         specifier: ^29.0.2
@@ -588,6 +591,10 @@ packages:
   napi-build-utils@2.0.0:
     resolution: {integrity: sha512-GEbrYkbfF7MoNaoh2iGG84Mnf/WZfB0GdGEsM8wz7Expx/LlWf5U8t9nvJKXSp3qr5IsEbK04cBGhol/KwOsWA==}
 
+  neverthrow@8.2.0:
+    resolution: {integrity: sha512-kOCT/1MCPAxY5iUV3wytNFUMUolzuwd/VF/1KCx7kf6CutrOsTie+84zTGTpgQycjvfLdBBdvBvFLqFD2c0wkQ==}
+    engines: {node: '>=18'}
+
   node-abi@3.89.0:
     resolution: {integrity: sha512-6u9UwL0HlAl21+agMN3YAMXcKByMqwGx+pq+P76vii5f7hTPtKDp08/H9py6DY+cfDw7kQNTGEj/rly3IgbNQA==}
     engines: {node: '>=10'}
@@ -1146,6 +1153,10 @@ snapshots:
       picocolors: 1.1.1
 
   napi-build-utils@2.0.0: {}
+
+  neverthrow@8.2.0:
+    optionalDependencies:
+      '@rollup/rollup-linux-x64-gnu': 4.59.0
 
   node-abi@3.89.0:
     dependencies:

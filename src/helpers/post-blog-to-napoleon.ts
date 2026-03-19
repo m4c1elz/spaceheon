@@ -1,7 +1,10 @@
 import { Blog } from '../types'
 import { getUserKeys } from './keys'
+import { err, ok, Result } from 'neverthrow'
 
-export async function postBlogToNapoleon(blog: Blog) {
+export async function postBlogToNapoleon(
+    blog: Blog,
+): Promise<Result<void, { message: string }>> {
     const form = {
         subject: blog.title,
         content: blog.blogHtml,
@@ -12,7 +15,7 @@ export async function postBlogToNapoleon(blog: Blog) {
 
     const { napoleonKey } = await getUserKeys()
 
-    await fetch('https://napoleonite.space/blog/newpost.php', {
+    const response = await fetch('https://napoleonite.space/blog/newpost.php', {
         method: 'POST',
         headers: {
             Cookie: `PHPSESSID=${napoleonKey}`,
@@ -20,4 +23,12 @@ export async function postBlogToNapoleon(blog: Blog) {
         },
         body: data,
     })
+
+    if (!response.ok) {
+        return err({
+            message: `ERROR: Blog could not be posted -  [HTTP ERROR ${response.status} - ${response.statusText}`,
+        })
+    }
+
+    return ok()
 }

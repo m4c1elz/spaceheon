@@ -17,7 +17,8 @@
     "dotenv": "^17.3.1",
     "enquirer": "^2.4.1",
     "keytar": "^7.9.0",
-    "nanospinner": "^1.2.2"
+    "nanospinner": "^1.2.2",
+    "neverthrow": "^8.2.0"
   },
   "bin": {
     "spaceheon": "./bin/index.js"

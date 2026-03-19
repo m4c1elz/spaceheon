@@ -7,11 +7,21 @@ import { spinner } from '../constants'
 export async function migrateSingleBlog(blogId: string) {
     spinner.start('Fetching Spacehey Blog...')
 
-    const blog = await scrapeSpaceheyBlog(blogId)
+    const blogResult = await scrapeSpaceheyBlog(blogId)
+
+    if (blogResult.isErr()) {
+        spinner.error(blogResult.error.message)
+        return
+    }
 
     spinner.update('Posting blog to napoleon...')
 
-    await postBlogToNapoleon(blog)
+    const postBlogResult = await postBlogToNapoleon(blogResult.value)
+
+    if (postBlogResult.isErr()) {
+        spinner.error(postBlogResult.error.message)
+        return
+    }
 
     spinner.success('Blog posted! Check napoleon.')
 }
