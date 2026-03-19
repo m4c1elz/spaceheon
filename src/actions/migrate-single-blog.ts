@@ -4,18 +4,14 @@ import { scrapeSpaceheyBlog } from '../helpers/scrape-spacehey-blog'
 import { postBlogToNapoleon } from '../helpers/post-blog-to-napoleon'
 import { spinner } from '../constants'
 
-export async function migrateSingleBlog(
-    blogId: string,
-    spaceheySession: string,
-    napoleonSession: string,
-) {
+export async function migrateSingleBlog(blogId: string) {
     spinner.start('Fetching Spacehey Blog...')
 
-    const blog = await scrapeSpaceheyBlog(blogId, spaceheySession)
+    const blog = await scrapeSpaceheyBlog(blogId)
 
     spinner.update('Posting blog to napoleon...')
 
-    await postBlogToNapoleon(blog, napoleonSession)
+    await postBlogToNapoleon(blog)
 
     spinner.success('Blog posted! Check napoleon.')
 }

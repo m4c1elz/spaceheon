@@ -1,9 +1,7 @@
 import { Blog } from '../types'
+import { getUserKeys } from './keys'
 
-export async function postBlogToNapoleon(
-    blog: Blog,
-    napoleonSessionId: string,
-) {
+export async function postBlogToNapoleon(blog: Blog) {
     const form = {
         subject: blog.title,
         content: blog.blogHtml,
@@ -12,10 +10,12 @@ export async function postBlogToNapoleon(
 
     const data = new URLSearchParams(form).toString().concat('&submit=')
 
+    const { napoleonKey } = await getUserKeys()
+
     await fetch('https://napoleonite.space/blog/newpost.php', {
         method: 'POST',
         headers: {
-            Cookie: `PHPSESSID=${napoleonSessionId}`,
+            Cookie: `PHPSESSID=${napoleonKey}`,
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: data,

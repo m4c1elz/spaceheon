@@ -1,11 +1,13 @@
 import { load } from 'cheerio'
 import { Blog } from '../types'
+import { getUserKeys } from './keys'
 
 const initialBlogText = `
-<b>
-    hi! if you can see this, please ignore. im a web dev trying to figure out a 
-    way to automatically migrate spacehey blogs to napoleon. will probably talk 
-    more about it on the future.
+<b style="text-align: center">
+    This blog post was migrated directly from spacehey through 
+        <a href="https://github.com/m4c1elz/spaceheon" style="color: #346cf9; text-decoration: underline">
+            spaceheon.
+        </a>
     <br>
     <br>
     <i>Posted originally in: {originalTimestamp}</i>
@@ -14,15 +16,14 @@ const initialBlogText = `
 </b>
 <br>`
 
-export async function scrapeSpaceheyBlog(
-    blogId: string,
-    userSession: string,
-): Promise<Blog> {
+export async function scrapeSpaceheyBlog(blogId: string): Promise<Blog> {
+    const { spaceheyKey } = await getUserKeys()
+
     const response = await fetch(
-        'https://blog.spacehey.com/entry?id=' + blogId,
+        `https://blog.spacehey.com/entry?id=${blogId}`,
         {
             headers: {
-                Cookie: 'SPACEHEY_SESSID='.concat(userSession),
+                Cookie: `SPACEHEY_SESSID=${spaceheyKey}`,
             },
         },
     )

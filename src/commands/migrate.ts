@@ -5,7 +5,8 @@ import { spinner } from '../constants'
 
 export async function migrate() {
     try {
-        const { napoleonKey, spaceheyKey } = await getUserKeys()
+        // checking if keys exists
+        await getUserKeys()
 
         const { blogId } = await enquirer.prompt<{ blogId: string }>({
             type: 'input',
@@ -13,7 +14,7 @@ export async function migrate() {
             message: 'Insert the spacehey blog ID to post to napoleon:',
         })
 
-        migrateSingleBlog(blogId, spaceheyKey, napoleonKey)
+        migrateSingleBlog(blogId)
     } catch (error) {
         spinner.error(
             'Keys not provided. Please use "spaceheon setup" and try again.',
