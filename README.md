@@ -24,5 +24,5 @@ pnpm build
 ### Roadmap
 
 - [x] Blog migration
-- [ ] Secure session storage
+- [x] Secure session storage
 - [ ] Multi-blog migration support
