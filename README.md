@@ -27,7 +27,6 @@ pnpm build
 
 - [x] Blog migration
 - [x] Secure session storage
-- [x] Better error handling
 - [ ] Blog category mapping
 - [ ] Multi-platform support
 - [ ] Multi-blog migration support
