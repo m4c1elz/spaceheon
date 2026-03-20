@@ -4,20 +4,25 @@ import { getUserKeys } from '../helpers/keys'
 import { spinner } from '../constants'
 
 export async function migrate() {
-    try {
-        // checking if keys exists
-        await getUserKeys()
+    // checking if keys exists
+    const result = await getUserKeys()
 
-        const { blogId } = await enquirer.prompt<{ blogId: string }>({
-            type: 'input',
-            name: 'blogId',
-            message: 'Insert the spacehey blog ID to post to napoleon:',
-        })
+    if (result.isErr()) {
+        spinner.error(result.error.message)
+        return
+    }
 
-        migrateSingleBlog(blogId)
-    } catch (error) {
-        spinner.error(
-            'Keys not provided. Please use "spaceheon setup" and try again.',
-        )
+    const { blogId } = await enquirer.prompt<{ blogId: string }>({
+        type: 'input',
+        name: 'blogId',
+        message: 'Insert the spacehey blog ID to post to napoleon:',
+    })
+
+    const migrateResult = await migrateSingleBlog(blogId)
+
+    if (migrateResult.isErr()) {
+        spinner.error(migrateResult.error.message)
+    } else {
+        spinner.success('Blog posted! Check Napoleon.')
     }
 }

@@ -1,4 +1,6 @@
+import { ok, err, Result } from 'neverthrow'
 import keytar from 'keytar'
+import { AppError, Keys } from '../types'
 
 export async function saveUserKeys(spaceheyKey: string, napoleonKey: string) {
     await Promise.all([
@@ -7,15 +9,18 @@ export async function saveUserKeys(spaceheyKey: string, napoleonKey: string) {
     ])
 }
 
-export async function getUserKeys() {
+export async function getUserKeys(): Promise<Result<Keys, AppError>> {
     const [spaceheyKey, napoleonKey] = await Promise.all([
         keytar.getPassword('spaceheon', 'spacehey_sessid'),
         keytar.getPassword('spaceheon', 'napoleon_sessid'),
     ])
 
     if (!spaceheyKey || !napoleonKey) {
-        throw new Error('Keys not found')
+        return err({
+            message:
+                'Setup keys were not found! Please run "spaceheon setup" first.',
+        })
     }
 
-    return { spaceheyKey, napoleonKey }
+    return ok({ spaceheyKey, napoleonKey })
 }

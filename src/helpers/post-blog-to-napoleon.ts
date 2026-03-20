@@ -1,18 +1,27 @@
-import { Blog } from '../types'
+import { AppError, Blog } from '../types'
 import { getUserKeys } from './keys'
+import { err, ok, Result } from 'neverthrow'
 
-export async function postBlogToNapoleon(blog: Blog) {
+export async function postBlogToNapoleon(
+    blog: Blog,
+): Promise<Result<void, AppError>> {
     const form = {
         subject: blog.title,
         content: blog.blogHtml,
-        category: '1',
+        category: '1', // TODO: add category mapping from spacehey to napoleon
     }
 
     const data = new URLSearchParams(form).toString().concat('&submit=')
 
-    const { napoleonKey } = await getUserKeys()
+    const keysResult = await getUserKeys()
 
-    await fetch('https://napoleonite.space/blog/newpost.php', {
+    if (keysResult.isErr()) {
+        return err(keysResult.error)
+    }
+
+    const { napoleonKey } = keysResult.value
+
+    const response = await fetch('https://napoleonite.space/blog/newpost.php', {
         method: 'POST',
         headers: {
             Cookie: `PHPSESSID=${napoleonKey}`,
@@ -20,4 +29,12 @@ export async function postBlogToNapoleon(blog: Blog) {
         },
         body: data,
     })
+
+    if (!response.ok) {
+        return err({
+            message: `ERROR: Blog could not be posted -  [HTTP ERROR ${response.status} - ${response.statusText}`,
+        })
+    }
+
+    return ok()
 }

@@ -1,6 +1,7 @@
 import { load } from 'cheerio'
-import { Blog } from '../types'
 import { getUserKeys } from './keys'
+import { err, ok, Result } from 'neverthrow'
+import { AppError, Blog } from '../types'
 
 const initialBlogText = `
 <b style="text-align: center">
@@ -16,8 +17,16 @@ const initialBlogText = `
 </b>
 <br>`
 
-export async function scrapeSpaceheyBlog(blogId: string): Promise<Blog> {
-    const { spaceheyKey } = await getUserKeys()
+export async function scrapeSpaceheyBlog(
+    blogId: string,
+): Promise<Result<Blog, AppError>> {
+    const keysResult = await getUserKeys()
+
+    if (keysResult.isErr()) {
+        return err(keysResult.error)
+    }
+
+    const { spaceheyKey } = keysResult.value
 
     const response = await fetch(
         `https://blog.spacehey.com/entry?id=${blogId}`,
@@ -29,7 +38,9 @@ export async function scrapeSpaceheyBlog(blogId: string): Promise<Blog> {
     )
 
     if (!response.ok) {
-        console.error('SOMETHING HAPPENED - HTTP CODE ' + response.status)
+        return err({
+            message: `Error while fetching data - [HTTP STATUS ${response.status} - ${response.statusText}]`,
+        })
     }
 
     const html = await response.text()
@@ -54,10 +65,10 @@ export async function scrapeSpaceheyBlog(blogId: string): Promise<Blog> {
         .replace(/\s+/g, ' ')
         .trim()
 
-    return {
+    return ok({
         title,
         blogHtml: fullHtml,
         originalTimestamp,
         kudosCount,
-    }
+    })
 }
