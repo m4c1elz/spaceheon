@@ -1,5 +1,4 @@
 import { ok, err, Result, fromPromise } from 'neverthrow'
-import keytar from 'keytar'
 import { AppError, Keys } from '../types'
 import { homedir } from 'node:os'
 import { writeFile, mkdir, readFile } from 'node:fs/promises'
@@ -10,14 +9,14 @@ export async function saveUserKeys(spaceheyKey: string, napoleonKey: string) {
 
     return writeFile(
         keysPath,
-        JSON.stringify({ spaceheyKey, napoleonKey }, null, 2),
+        JSON.stringify({ spaceheyKey, napoleonKey }, null, 2)
     )
 }
 
 export async function getUserKeys(): Promise<Result<Keys, AppError>> {
     const fileResult = await fromPromise(
         readFile(keysPath, { encoding: 'utf-8' }),
-        e => e as Error,
+        e => e as Error
     )
 
     if (fileResult.isErr()) {
